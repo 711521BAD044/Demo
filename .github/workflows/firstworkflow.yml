@@ -1,0 +1,12 @@
+name: Hello Workflow
+
+on: push
+
+jobs:
+  first:
+    runs-on: windows-latest
+
+    steps:
+      - name: firstfile
+        run: echo "Printed da"
+
