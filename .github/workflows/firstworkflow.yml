@@ -1,17 +1,29 @@
-name: Trigger on Push and Manual Run
+name: Upload and Download Artifact
 
 on:
   push:
     branches:
-      - main  # Run when code is pushed to the main branch
-  workflow_dispatch:  # Allow manual triggering from GitHub UI
+      - main
 
 jobs:
-  example:
+  upload-artifact:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up environment variable
-        run: echo "MY_ENV_VAR=SomeValue" >> $GITHUB_ENV  # Set environment variable
+      - name: Create a file
+        run: echo "Hello, world!" > hello.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: hello-file  # Name of the artifact
+          path: hello.txt   # Path of the file to be uploaded
 
-      - name: Print environment variable
-        run: echo "My environment variable: $MY_ENV_VAR"  # Print the variable
+  download-artifact:
+    runs-on: ubuntu-latest
+    needs: upload-artifact  # This job depends on the successful completion of the upload-artifact job
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: hello-file  # The name of the artifact you want to download
+      - name: Print artifact content
+        run: cat hello.txt  # Print the content of the downloaded file
