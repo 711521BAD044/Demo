@@ -10,6 +10,7 @@ jobs:
 
     steps:
       - name: firstfile
-        run: echo "Printed da"
-        run: echo "2. $firstvariable"
+        run: |
+          echo "Printed da"
+          echo "2. $firstvariable"
 
