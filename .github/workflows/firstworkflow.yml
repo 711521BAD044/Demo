@@ -6,11 +6,11 @@ jobs:
   first:
     runs-on: ubuntu-latest
     env:
-      Firstvariable: ${{ secrets.MY_SECRET }}
+      FIRST: ${{ secrets.MY_SECRET }}
 
     steps:
       - name: firstfile
         run: |
           echo "Printed da"
-          echo "2. $Firstvariable"
+          echo "2. $FIRST"
 
