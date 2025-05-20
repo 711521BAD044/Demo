@@ -1,14 +1,17 @@
 name: Test Secret Workflow
 
-on: push
+on: push  # This runs the workflow when you push to the repository
 
 jobs:
-  test-secret:
-    runs-on: ubuntu-latest  # Running on the latest Ubuntu runner
+  show-secret:
+    runs-on: ubuntu-latest  # This runs the job on the latest Ubuntu runner
+
+    env:
+      SECRET: ${{ secrets.MY_SECRET }}  # Injecting the secret into the environment variable 'SECRET'
 
     steps:
-      - name: Set up secret in environment variable
-        env:
-          SECRET: ${{ secrets.MY_SECRET }}  # Reference the secret here
-        run: |
-          echo "This is my secret: $SECRET"  # GitHub should mask the secret as ***
+      - name: Print secret (it will be masked)
+        run: echo "$SECRET"  # GitHub will mask the secret here
+
+      - name: Print secret inside a sentence (it will not be fully masked)
+        run: echo "My secret is $SECRET"  # Secret might not be fully masked in the sentence
